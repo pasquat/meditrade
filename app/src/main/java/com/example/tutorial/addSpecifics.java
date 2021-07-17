@@ -4,15 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -26,7 +30,6 @@ public class addSpecifics extends AppCompatActivity {
         setContentView(R.layout.activity_add_specifics);
         Intent intent = getIntent();
         Uri filePath = intent.getParcelableExtra("filepath");
-        Toast.makeText(this, filePath+"", Toast.LENGTH_SHORT).show();
         Bitmap bitmap = null;
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), filePath);
@@ -39,5 +42,30 @@ public class addSpecifics extends AppCompatActivity {
         ArrayAdapter yearAdapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_year.setAdapter(yearAdapter);
+        TextView wordcounter = (TextView)findViewById(R.id.wordcounter);
+        EditText editTextDesc = (EditText) findViewById(R.id.editTextDesc);
+        editTextDesc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String input = editTextDesc.getText().toString();
+                wordcounter.setText(input.length()+" / 100");
+                if(input.length() == 100)
+                    wordcounter.setTextColor(Color.parseColor("#FF0000"));
+                else
+                    wordcounter.setTextColor(Color.parseColor("#000000"));
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //String currentText = editable.toString();
+                //int currentLength = currentText.length();
+                //wordcounter.setText(currentLength + "/100");
+            }
+        });
+
     }
+
 }

@@ -129,9 +129,8 @@
             android:background="@drawable/textinput"
             android:ems="10"
             android:fontFamily="@font/lato"
-            android:inputType="text"
-            android:maxLines="4"
-            android:minLines="1"
+            android:inputType="textMultiLine"
+            android:maxLength="100"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:scrollbars="vertical"
@@ -140,6 +139,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textViewDesc"
             app:layout_constraintTop_toBottomOf="@+id/textViewDesc" />
+
+        <TextView
+            android:id="@+id/wordcounter"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/lato"
+            android:gravity="center_vertical"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewDesc"
+            app:layout_constraintStart_toEndOf="@+id/textViewDesc"
+            app:layout_constraintTop_toTopOf="@+id/textViewDesc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

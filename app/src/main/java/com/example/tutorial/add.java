@@ -159,7 +159,7 @@ public class add extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Toast.makeText(getContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Upload Completed", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getActivity(), addSpecifics.class);
                             intent.putExtra("filepath",filePath);
                             startActivity(intent);
