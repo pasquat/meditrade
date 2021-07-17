@@ -129,7 +129,7 @@
             android:background="@drawable/textinput"
             android:ems="10"
             android:fontFamily="@font/lato"
-            android:inputType="textMultiLine"
+            android:inputType="text"
             android:maxLines="4"
             android:minLines="1"
             android:paddingLeft="10dp"
