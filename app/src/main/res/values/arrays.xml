@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--단순 xml용-->
+    <string-array name="categories">
+        <item>Sanitary Goods / Masks</item>
+        <item>Over-the-counter Medication</item>
+        <item>Food</item>
+        <item>Daily Accessories</item>
+        <item>Other</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/marketplace3">
+
+    <fragment
+        android:id="@+id/marketplace3"
+        android:name="com.example.tutorial.marketplace"
+        android:label="fragment_marketplace"
+        tools:layout="@layout/fragment_marketplace" />
+    <fragment
+        android:id="@+id/categories"
+        android:name="com.example.tutorial.categories"
+        android:label="fragment_categories"
+        tools:layout="@layout/fragment_categories" />
+    <fragment
+        android:id="@+id/add2"
+        android:name="com.example.tutorial.add"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/notifications"
+        android:name="com.example.tutorial.notifications"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.tutorial.profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

@@ -1,0 +1,9 @@
+<resources>
+    <string-array name="list">
+        <item>Sanitary Goods / Masks</item>
+        <item>Over-the-counter Medication</item>
+        <item>Food</item>
+        <item>Daily Accessories</item>
+        <item>Other</item>
+    </string-array>
+</resources>
