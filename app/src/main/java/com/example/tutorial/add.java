@@ -159,13 +159,13 @@ public class add extends Fragment {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Toast.makeText(getContext(), "Upload Completed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Upload Completed!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getActivity(), addSpecifics.class);
                             intent.putExtra("filepath",filePath);
                             startActivity(intent);
                         }
                     })
-                    //실패시
+                    //if fail
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -174,7 +174,7 @@ public class add extends Fragment {
                             Toast.makeText(getContext(), "Upload Failed!", Toast.LENGTH_SHORT).show();
                         }
                     })
-                    //진행중
+                    //in progress
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
