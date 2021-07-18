@@ -44,7 +44,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="0dp"
-            android:layout_height="3dp"
+            android:layout_height="2dp"
             android:background="#D5D5D5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +57,7 @@
         android:layout_height="200dp"
         android:layout_below="@id/header"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:gravity="center" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +81,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/productTitle"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="20dp"
@@ -133,6 +134,7 @@
             android:maxLength="100"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:paddingBottom="25dp"
             android:scrollbars="vertical"
             android:textColor="#000000"
             android:textCursorDrawable="@drawable/blinkingcursor"
@@ -144,13 +146,13 @@
             android:id="@+id/wordcounter"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="10dp"
             android:fontFamily="@font/lato"
             android:gravity="center_vertical"
             android:textColor="#000000"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewDesc"
-            app:layout_constraintStart_toEndOf="@+id/textViewDesc"
-            app:layout_constraintTop_toTopOf="@+id/textViewDesc" />
+            app:layout_constraintBottom_toBottomOf="@+id/editTextDesc"
+            app:layout_constraintEnd_toEndOf="@+id/editTextDesc" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -189,7 +191,7 @@
             app:layout_constraintTop_toTopOf="@+id/categoriez" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button3"
+            android:id="@+id/post"
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_marginStart="100dp"
