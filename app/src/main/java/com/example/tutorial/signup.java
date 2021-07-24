@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 public class signup extends AppCompatActivity {
 
@@ -29,6 +31,12 @@ public class signup extends AppCompatActivity {
         edt_id = (EditText) findViewById(R.id.emailInput);
         edt_pw = (EditText) findViewById(R.id.passwordInput);
         edt_pwc = (EditText) findViewById(R.id.passwordInput2);
+
+        CountryCodePicker ccp;
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+
+        Typeface typeFace=Typeface.createFromAsset(getApplicationContext().getAssets(),"Lato-Bold.ttf");
+        ccp.setTypeFace(typeFace);
 
         // ...
         // Initialize Firebase Auth

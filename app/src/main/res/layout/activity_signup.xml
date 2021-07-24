@@ -120,11 +120,46 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirmpassword">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Country"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="35dp"
+            android:layout_toRightOf="@id/textView2"
+            app:ccp_defaultNameCode="US"
+            app:ccp_hideNameCode="true"
+            app:ccp_hidePhoneCode="true"
+            app:ccp_showFullName="true"
+            app:ccp_textFont="Lato-Bold.ttf" />
+
+
+    </RelativeLayout>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button2"
         android:layout_width="140dp"
         android:layout_height="75dp"
-        android:layout_below="@id/confirmpassword"
+        android:layout_below="@id/country"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:background="@drawable/gradient_signup"

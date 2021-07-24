@@ -131,7 +131,6 @@ public class addSpecifics extends AppCompatActivity {
         map.put("postId", email);
         map.put("title",titleString);
         map.put("desc",descString);
-        map.put()
 
         query.child(key).setValue(map);
     }
