@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tutorial">
         <activity android:name=".addSpecifics">
-
         </activity>
         <activity android:name=".donorInfo" />
         <activity android:name=".ProductSpecification" />
@@ -24,13 +23,12 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".signup" >
-
-        </activity>
-        <activity android:name=".NewActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".NewActivity" >
         </activity>
         <activity android:name=".MainActivity">
         </activity>

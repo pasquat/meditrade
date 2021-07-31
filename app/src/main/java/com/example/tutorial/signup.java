@@ -17,9 +17,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class signup extends AppCompatActivity {
+
+    private FirebaseDatabase database;
 
     private FirebaseAuth mAuth;
     EditText edt_id,edt_pw,edt_pwc;
@@ -27,6 +34,8 @@ public class signup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        database = FirebaseDatabase.getInstance();
 
         edt_id = (EditText) findViewById(R.id.emailInput);
         edt_pw = (EditText) findViewById(R.id.passwordInput);
@@ -82,10 +91,28 @@ public class signup extends AppCompatActivity {
                 }
 
 
+                EditText editTextPhone = (EditText) findViewById(R.id.editTextPhone);
+
+                String idString = edt_id.getText().toString();
+                String phoneString = editTextPhone.getText().toString();
+                firebase_add(idString,phoneString);
+                //ADD COUNTRY FUNC
+
             }
         });
 
     }
 
+    public void firebase_add(String idString,String phoneString){
+        database = FirebaseDatabase.getInstance();
+        DatabaseReference query = database.getReference("post");
+        String key = query.push().getKey();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", idString);
+        map.put("pn", phoneString);
+
+        query.child(key).setValue(map);
+    }
 
 }
