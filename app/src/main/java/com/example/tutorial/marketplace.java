@@ -12,6 +12,11 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +26,10 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class marketplace extends Fragment  {
+
+    listAdapter adapter;
+    ListView listView;
+    FirebaseDatabase database;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,6 +71,8 @@ public class marketplace extends Fragment  {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        database = FirebaseDatabase.getInstance();
+        database_run();
     }
 
     @Override
@@ -70,16 +81,11 @@ public class marketplace extends Fragment  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_marketplace, container, false);
 
-        ListView listView = view.findViewById(R.id.listview);
-        listAdapter adapter = new listAdapter();
-        adapter.addItem(new listitem("30pc Face Masks", "010-1000-1000",R.drawable.masks));
-        adapter.addItem(new listitem("whiteFish", "010-1000-1001",R.drawable.masks));
-        adapter.addItem(new listitem("whiteGroup", "010-1000-1002",R.drawable.masks));
-        adapter.addItem(new listitem("blackGroup", "010-1000-1003",R.drawable.masks));
-        adapter.addItem(new listitem("blackFish", "010-1000-1000",R.drawable.masks));
-        adapter.addItem(new listitem("whiteFish", "010-1000-1001",R.drawable.masks));
+        database = FirebaseDatabase.getInstance();
+        listView = view.findViewById(R.id.listview);
+        adapter = new listAdapter();
         listView.setAdapter(adapter);
-
+        database_run();
         return view;
     }
 
@@ -122,5 +128,25 @@ public class marketplace extends Fragment  {
             singerItemView.setImage(item.getResId());
             return singerItemView;
         }
+    }
+    public void database_run()
+    {
+        database.getReference("post").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot messageData : dataSnapshot.getChildren()) {
+                    String desc = messageData.child("desc").getValue().toString();
+                    Toast.makeText(getContext(), messageData.toString(), Toast.LENGTH_SHORT).show();
+                    String postId = messageData.child("postId").getValue().toString();
+                    adapter.addItem(new listitem(desc, postId,R.drawable.masks));
+                }
+                adapter.notifyDataSetChanged();
+                listView.setSelection(adapter.getCount() - 1);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
