@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -127,6 +128,7 @@ public class marketplace extends Fragment  {
             singerItemView.setMobile(item.getMobile());
             singerItemView.setImage(item.getResId());
             return singerItemView;
+
         }
     }
     public void database_run()

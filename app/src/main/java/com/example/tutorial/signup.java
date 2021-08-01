@@ -29,7 +29,7 @@ public class signup extends AppCompatActivity {
     private FirebaseDatabase database;
 
     private FirebaseAuth mAuth;
-    EditText edt_id,edt_pw,edt_pwc;
+    EditText edt_id,edt_pw,edt_pwc,editTextPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +40,7 @@ public class signup extends AppCompatActivity {
         edt_id = (EditText) findViewById(R.id.emailInput);
         edt_pw = (EditText) findViewById(R.id.passwordInput);
         edt_pwc = (EditText) findViewById(R.id.passwordInput2);
+        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
 
         CountryCodePicker ccp;
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
@@ -62,16 +63,21 @@ public class signup extends AppCompatActivity {
                 if(id.equals("")||pw.equals("")){
                     Toast.makeText(signup.this, "Please put in your Email and Password.", Toast.LENGTH_SHORT).show();
                 }
-                else if(pw == pwc){
+                else if(pw.equals(pwc)){
                     mAuth.createUserWithEmailAndPassword(id,pw)
                             .addOnCompleteListener(signup.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        FirebaseUser user = mAuth.getCurrentUser();
                                         Toast.makeText(getApplicationContext(), "Sign Up Successful!",
                                                 Toast.LENGTH_SHORT).show();
+
+                                        String phoneString = editTextPhone.getText().toString();
+                                        String countryString = ccp.getSelectedCountryName();
+                                        String uidString = mAuth.getUid();
+
+                                        firebase_add(id,phoneString,countryString,uidString);
                                         Intent intent = new Intent(signup.this, MainActivity.class) ;
                                         startActivity(intent) ;
                                     } else {
@@ -83,34 +89,27 @@ public class signup extends AppCompatActivity {
                                 }
                             });
                 }
-                else if(pw != pwc){
-                    Toast.makeText(getApplicationContext(), "Please confirm your password.",
-                            Toast.LENGTH_SHORT).show();
+                else if(!pw.equals(pwc)){
+                    Toast.makeText(getApplicationContext(), "Please confirm your password.", Toast.LENGTH_SHORT).show();
                     edt_pw.setText("");
                     edt_pwc.setText("");
                 }
-
-
-                EditText editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-
-                String idString = edt_id.getText().toString();
-                String phoneString = editTextPhone.getText().toString();
-                firebase_add(idString,phoneString);
-                //ADD COUNTRY FUNC
 
             }
         });
 
     }
 
-    public void firebase_add(String idString,String phoneString){
+    public void firebase_add(String idString,String phoneString,String countryString,String uidString){
         database = FirebaseDatabase.getInstance();
-        DatabaseReference query = database.getReference("post");
+        DatabaseReference query = database.getReference("info");
         String key = query.push().getKey();
 
         Map<String, Object> map = new HashMap<>();
         map.put("id", idString);
         map.put("pn", phoneString);
+        map.put("country", countryString);
+        map.put("uid", uidString);
 
         query.child(key).setValue(map);
     }
