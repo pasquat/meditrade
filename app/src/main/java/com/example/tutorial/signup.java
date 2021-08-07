@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,6 +56,12 @@ public class signup extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_custom,
+                (ViewGroup) findViewById(R.id.toast_layout_root));
+        TextView text = (TextView) layout.findViewById(R.id.text);
+
+
         Button button2 = (Button) findViewById(R.id.button2) ;
         button2.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -70,8 +80,12 @@ public class signup extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        Toast.makeText(getApplicationContext(), "Sign Up Successful!",
-                                                Toast.LENGTH_SHORT).show();
+                                        text.setText("Sign Up Successful!");
+                                        Toast toast = new Toast(getApplicationContext());
+                                        toast.setGravity(Gravity.BOTTOM, 0, 50);
+                                        toast.setDuration(Toast.LENGTH_SHORT);
+                                        toast.setView(layout);
+                                        toast.show();
 
                                         String phoneString = editTextPhone.getText().toString();
                                         String countryString = ccp.getSelectedCountryName();
@@ -82,15 +96,23 @@ public class signup extends AppCompatActivity {
                                         startActivity(intent) ;
                                     } else {
                                         // If sign in fails, display a message to the user.
-
-                                        Toast.makeText(getApplicationContext(), "Please check your credentials.",
-                                                Toast.LENGTH_SHORT).show();
+                                        text.setText("Please Check your credentials.");
+                                        Toast toast = new Toast(getApplicationContext());
+                                        toast.setGravity(Gravity.BOTTOM, 0, 50);
+                                        toast.setDuration(Toast.LENGTH_SHORT);
+                                        toast.setView(layout);
+                                        toast.show();
                                     }
                                 }
                             });
                 }
                 else if(!pw.equals(pwc)){
-                    Toast.makeText(getApplicationContext(), "Please confirm your password.", Toast.LENGTH_SHORT).show();
+                    text.setText("Passwords do not match.");
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setGravity(Gravity.BOTTOM, 0, 50);
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.setView(layout);
+                    toast.show();
                     edt_pw.setText("");
                     edt_pwc.setText("");
                 }
