@@ -1,13 +1,23 @@
 package com.example.tutorial;
 
         import android.content.Context;
+        import android.net.Uri;
         import android.util.AttributeSet;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.widget.ImageView;
         import android.widget.LinearLayout;
         import android.widget.TextView;
+        import android.widget.Toast;
+
+        import androidx.annotation.NonNull;
         import androidx.annotation.Nullable;
+
+        import com.bumptech.glide.Glide;
+        import com.google.android.gms.tasks.OnFailureListener;
+        import com.google.android.gms.tasks.OnSuccessListener;
+        import com.google.firebase.storage.FirebaseStorage;
+        import com.google.firebase.storage.StorageReference;
 
 public class listitemview extends LinearLayout {
 
@@ -42,7 +52,20 @@ public class listitemview extends LinearLayout {
     public void setMobile(String mobile){
         textView2.setText(mobile);
     }
-    public void setImage(int resId){
-        imageView.setImageResource(resId);
+    public void setImage(String resId){
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://meditrade-e4574.appspot.com");
+        StorageReference storageRef = storage.getReference();
+        storageRef.child("images/"+resId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //이미지 로드 성공시
+                Glide.with(getContext()).load(uri).centerCrop().into(imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                //이미지 로드 실패시
+            }
+        });
     }
 }

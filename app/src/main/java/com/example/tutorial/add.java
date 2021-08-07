@@ -148,6 +148,7 @@ public class add extends Fragment {
                             Toast.makeText(getContext(), "Upload Completed!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getActivity(), addSpecifics.class);
                             intent.putExtra("filepath",filePath);
+                            intent.putExtra("filename",filename);
                             startActivity(intent);
                         }
                     })

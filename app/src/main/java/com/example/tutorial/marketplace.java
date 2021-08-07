@@ -73,6 +73,7 @@ public class marketplace extends Fragment  {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         database = FirebaseDatabase.getInstance();
+        adapter = new listAdapter();
         database_run();
     }
 
@@ -84,9 +85,7 @@ public class marketplace extends Fragment  {
 
         database = FirebaseDatabase.getInstance();
         listView = view.findViewById(R.id.listview);
-        adapter = new listAdapter();
         listView.setAdapter(adapter);
-        database_run();
         return view;
     }
 
@@ -130,17 +129,22 @@ public class marketplace extends Fragment  {
             return singerItemView;
 
         }
+        public void clear(){
+            items.clear();
+        }
     }
     public void database_run()
     {
+        adapter.clear();
         database.getReference("post").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
-                    String desc = messageData.child("desc").getValue().toString();
+                    String desc = messageData.child("title").getValue().toString();
                     Toast.makeText(getContext(), messageData.toString(), Toast.LENGTH_SHORT).show();
-                    String postId = messageData.child("postId").getValue().toString();
-                    adapter.addItem(new listitem(desc, postId,R.drawable.masks));
+                    String postId = messageData.child("country").getValue().toString();
+                    String imgId = messageData.child("img").getValue().toString();
+                    adapter.addItem(new listitem(desc,postId,imgId));
                 }
                 adapter.notifyDataSetChanged();
                 listView.setSelection(adapter.getCount() - 1);

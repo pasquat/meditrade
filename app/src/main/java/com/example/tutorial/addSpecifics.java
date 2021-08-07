@@ -41,14 +41,12 @@ public class addSpecifics extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_specifics);
         Intent intent = getIntent();
-        Uri filePath = intent.getParcelableExtra("filepath");
-        //change uri to string
-        String imageString;
-        imageString = filePath.toString();
+        Uri filePath2 = intent.getParcelableExtra("filepath");
+        String filePath = intent.getStringExtra("filename");
 
         Bitmap bitmap = null;
         try {
-            bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), filePath);
+            bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), filePath2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,15 +110,15 @@ public class addSpecifics extends AppCompatActivity {
                 String titleString = editTextTitle.getText().toString();
                 String spinnerString = sp_cat.getSelectedItem().toString();
                 String descString = editTextDesc.getText().toString();
-                String imageString = filePath.toString();
                 String email = user.getEmail();
-                firebase_add(titleString,imageString,email,descString,spinnerString);
+                String country = "Angola";
+                firebase_add(titleString,filePath,email,descString,spinnerString,country);
 
             }
         });
     }
 
-    public void firebase_add(String titleString,String imageString,String email,String descString, String spinnerString){
+    public void firebase_add(String titleString,String imageString,String email,String descString,String spinnerString,String country){
         database = FirebaseDatabase.getInstance();
         DatabaseReference query = database.getReference("post");
         String key = query.push().getKey();
@@ -131,6 +129,7 @@ public class addSpecifics extends AppCompatActivity {
         map.put("postId", email);
         map.put("title",titleString);
         map.put("desc",descString);
+        map.put("country",country);
 
         query.child(key).setValue(map);
     }

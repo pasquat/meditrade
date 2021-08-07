@@ -3,10 +3,10 @@ package com.example.tutorial;
 public class listitem {
     String name;
     String mobile;
-    int resId;
+    String resId;
 
     //생성
-    public listitem(String name, String mobile, int resId) {
+    public listitem(String name, String mobile, String resId) {
         this.name = name;
         this.mobile = mobile;
         this.resId = resId;
@@ -29,7 +29,7 @@ public class listitem {
         this.mobile = mobile;
     }
 
-    public int getResId() {
+    public String getResId() {
         return resId;
     }
 
