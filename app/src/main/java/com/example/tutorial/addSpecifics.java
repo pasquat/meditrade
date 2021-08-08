@@ -23,8 +23,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,7 +38,8 @@ import static java.security.AccessController.getContext;
 public class addSpecifics extends AppCompatActivity {
 
     private FirebaseDatabase database;
-
+    private FirebaseAuth mAuth;
+    String uid="",country="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,7 @@ public class addSpecifics extends AppCompatActivity {
         Uri filePath2 = intent.getParcelableExtra("filepath");
         String filePath = intent.getStringExtra("filename");
 
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Bitmap bitmap = null;
         try {
             bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), filePath2);
@@ -89,15 +94,11 @@ public class addSpecifics extends AppCompatActivity {
 
 
         // titleString, imageString, descString, spinnerString
-
-
-
-
         database = FirebaseDatabase.getInstance();
-
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String email = user.getEmail();
+        getAccount();
+
 
         //Toast.makeText(getApplicationContext(),email,Toast.LENGTH_SHORT).show();
 
@@ -111,7 +112,6 @@ public class addSpecifics extends AppCompatActivity {
                 String spinnerString = sp_cat.getSelectedItem().toString();
                 String descString = editTextDesc.getText().toString();
                 String email = user.getEmail();
-                String country = "Angola";
                 firebase_add(titleString,filePath,email,descString,spinnerString,country);
 
             }
@@ -132,6 +132,23 @@ public class addSpecifics extends AppCompatActivity {
         map.put("country",country);
 
         query.child(key).setValue(map);
+    }
+
+    public void getAccount()
+    {
+        database.getReference("info").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot messageData : dataSnapshot.getChildren()) {
+                    if(messageData.child("uid").getValue().toString().equals(uid)){
+                        country=messageData.child("country").getValue().toString();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 }
