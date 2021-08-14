@@ -141,17 +141,16 @@ public class marketplace extends Fragment  {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
                     String desc = messageData.child("title").getValue().toString();
-                    Toast.makeText(getContext(), messageData.toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), messageData.toString(), Toast.LENGTH_SHORT).show();
                     String postId = messageData.child("country").getValue().toString();
                     String imgId = messageData.child("img").getValue().toString();
                     adapter.addItem(new listitem(desc,postId,imgId));
                 }
                 adapter.notifyDataSetChanged();
-                listView.setSelection(adapter.getCount() - 1);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

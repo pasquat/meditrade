@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        SharedPreferences sf = getSharedPreferences("sFile",MODE_PRIVATE);
+        String spText = sf.getString("uid","");
+
 
         edt_id = (EditText) findViewById(R.id.emailInputmain);
         edt_pw = (EditText) findViewById(R.id.passwordInputmain);
@@ -37,6 +42,52 @@ public class MainActivity extends AppCompatActivity {
         View layout = inflater.inflate(R.layout.toast_custom,
                 (ViewGroup) findViewById(R.id.toast_layout_root));
         TextView text = (TextView) layout.findViewById(R.id.text);
+
+        if(spText.equals("")){}
+        else{
+            String id = sf.getString("id","");
+            String pw = sf.getString("pw","");
+
+            mAuth.signInWithEmailAndPassword(id,pw)
+                    .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                String uid = mAuth.getCurrentUser().getUid();
+                                text.setText("Login Successful!");
+                                Toast toast = new Toast(getApplicationContext());
+                                toast.setGravity(Gravity.BOTTOM, 0, 0);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.setView(layout);
+                                toast.show();
+
+                                // Activity가 종료되기 전에 저장한다.
+                                //SharedPreferences를 sFile이름, 기본모드로 설정
+                                SharedPreferences sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
+
+                                //저장을 하기위해 editor를 이용하여 값을 저장시켜준다.
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("uid",uid); // key, value를 이용하여 저장하는 형태
+                                editor.putString("id",id);
+                                editor.putString("pw",pw);
+                                editor.commit();
+
+                                Intent intent = new Intent(MainActivity.this, NewActivity.class) ;
+                                startActivity(intent) ;
+                            } else {
+                                // If sign in fails, display a message to the user.
+
+                                text.setText("Username or Password is incorrect.");
+                                Toast toast = new Toast(getApplicationContext());
+                                toast.setGravity(Gravity.BOTTOM, 0, 0);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.setView(layout);
+                                toast.show();
+                            }
+                        }
+                    });
+        }
 
         Button button1 = (Button) findViewById(R.id.loginmain) ;
         button1.setOnClickListener(new Button.OnClickListener() {
@@ -57,13 +108,25 @@ public class MainActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
-                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    String uid = mAuth.getCurrentUser().getUid();
                                     text.setText("Login Successful!");
                                     Toast toast = new Toast(getApplicationContext());
                                     toast.setGravity(Gravity.BOTTOM, 0, 0);
                                     toast.setDuration(Toast.LENGTH_SHORT);
                                     toast.setView(layout);
                                     toast.show();
+
+                                    // Activity가 종료되기 전에 저장한다.
+                                    //SharedPreferences를 sFile이름, 기본모드로 설정
+                                    SharedPreferences sharedPreferences = getSharedPreferences("sFile",MODE_PRIVATE);
+
+                                    //저장을 하기위해 editor를 이용하여 값을 저장시켜준다.
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString("uid",uid); // key, value를 이용하여 저장하는 형태
+                                    editor.putString("id",id);
+                                    editor.putString("pw",pw);
+                                    editor.commit();
+
                                     Intent intent = new Intent(MainActivity.this, NewActivity.class) ;
                                     startActivity(intent) ;
                                 } else {

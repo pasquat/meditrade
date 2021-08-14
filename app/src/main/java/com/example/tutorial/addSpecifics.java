@@ -108,12 +108,19 @@ public class addSpecifics extends AppCompatActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String titleString = editTextTitle.getText().toString();
-                String spinnerString = sp_cat.getSelectedItem().toString();
-                String descString = editTextDesc.getText().toString();
-                String email = user.getEmail();
-                firebase_add(titleString,filePath,email,descString,spinnerString,country);
-
+                try {
+                    String titleString = editTextTitle.getText().toString();
+                    String spinnerString = sp_cat.getSelectedItem().toString();
+                    String descString = editTextDesc.getText().toString();
+                    String email = user.getEmail();
+                    firebase_add(titleString, filePath, email, descString, spinnerString, country);
+                    Intent intent = new Intent(addSpecifics.this, donorInfo.class) ;
+                    startActivity(intent) ;
+                }
+                catch(Exception e){
+                    //error message
+                    e.toString();
+                }
             }
         });
     }

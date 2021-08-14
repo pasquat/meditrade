@@ -12,7 +12,7 @@
     <item
         android:id="@+id/add2"
         android:icon="@drawable/ic_add"
-        android:title="" />
+        android:title="Add" />
     <item
         android:id="@+id/notifications"
         android:icon="@drawable/ic_notifications"
