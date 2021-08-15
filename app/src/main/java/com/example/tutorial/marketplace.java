@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -86,6 +87,12 @@ public class marketplace extends Fragment  {
         database = FirebaseDatabase.getInstance();
         listView = view.findViewById(R.id.listview);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
+
+            }
+        });
         return view;
     }
 
