@@ -23,7 +23,6 @@
         </activity>
         <activity android:name=".addSpecifics"></activity>
         <activity android:name=".donorInfo" />
-        <activity android:name=".ProductSpecification" />
         <activity
             android:name=".itemSpecifics"
             android:windowSoftInputMode="adjustResize"></activity>
