@@ -4,12 +4,13 @@ public class listitem {
     String name;
     String mobile;
     String resId;
-
+    String key;
     //생성
-    public listitem(String name, String mobile, String resId) {
+    public listitem(String name, String mobile, String resId, String key) {
         this.name = name;
         this.mobile = mobile;
         this.resId = resId;
+        this.key = key;
     }
 
     //변수에 접근할 때 .OO 접근하기보다는 안전하게 getter, setter를 이용합니다.
@@ -32,6 +33,10 @@ public class listitem {
     public String getResId() {
         return resId;
     }
+
+    public String getKey(){ return key; }
+
+    public void setKey(String key) {this.key=key;}
 
     @Override
     public String toString() {

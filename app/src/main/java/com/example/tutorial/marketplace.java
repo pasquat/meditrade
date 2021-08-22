@@ -1,5 +1,8 @@
 package com.example.tutorial;
 
+import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -90,7 +93,9 @@ public class marketplace extends Fragment  {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
-
+                Intent intent=new Intent(getContext(),itemSpecifics.class);
+                intent.putExtra("key",adapter.items.get(a_position).key);
+                startActivity(intent);
             }
         });
         return view;
@@ -133,8 +138,17 @@ public class marketplace extends Fragment  {
             singerItemView.setName(item.getName());
             singerItemView.setMobile(item.getMobile());
             singerItemView.setImage(item.getResId());
-            return singerItemView;
 
+            TextView text = (TextView) convertView.findViewById(R.id.textView11);
+
+            if(items.get(position) != null )
+            {
+                text.setTypeface();
+                text.setBackgroundColor( color );
+
+            }
+
+            return singerItemView;
         }
         public void clear(){
             items.clear();
@@ -147,11 +161,12 @@ public class marketplace extends Fragment  {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
+                    String key = messageData.getKey();
                     String desc = messageData.child("title").getValue().toString();
                     //Toast.makeText(getContext(), messageData.toString(), Toast.LENGTH_SHORT).show();
                     String postId = messageData.child("country").getValue().toString();
                     String imgId = messageData.child("img").getValue().toString();
-                    adapter.addItem(new listitem(desc,postId,imgId));
+                    adapter.addItem(new listitem(desc,postId,imgId,key));
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -161,4 +176,7 @@ public class marketplace extends Fragment  {
             }
         });
     }
+
+
+
 }

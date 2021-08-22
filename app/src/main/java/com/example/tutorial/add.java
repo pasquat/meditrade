@@ -3,6 +3,7 @@ package com.example.tutorial;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -93,7 +94,6 @@ public class add extends Fragment {
         button3.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //이미지를 선택
                 Intent intent = new Intent();
                 intent.setType("image/*");
