@@ -25,6 +25,7 @@ public class itemSpecifics extends AppCompatActivity {
     FirebaseDatabase database;
     TextView title,desc;
     ImageView img;
+    String strPostId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class itemSpecifics extends AppCompatActivity {
         desc = (TextView)findViewById(R.id.textView8);
         img = (ImageView)findViewById(R.id.imageView3);
 
+
         database = FirebaseDatabase.getInstance();
         database.getReference("post").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -47,6 +49,7 @@ public class itemSpecifics extends AppCompatActivity {
                         String strDesc = messageData.child("desc").getValue().toString();
                         String strTitle = messageData.child("title").getValue().toString();
                         String strImgId = messageData.child("img").getValue().toString();
+                        strPostId = messageData.child("postId").getValue().toString();
 
                         title.setText(strTitle);
                         desc.setText(strDesc);
@@ -79,6 +82,7 @@ public class itemSpecifics extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(itemSpecifics.this, donorInfo.class) ;
+                intent.putExtra("postId",strPostId);
                 startActivity(intent) ;
             }
         });

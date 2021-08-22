@@ -98,7 +98,7 @@ public class add extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "이미지를 선택하세요."), 0);
+                startActivityForResult(Intent.createChooser(intent, "Choose an Image"), 0);
             }
         });
         return inflate;

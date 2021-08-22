@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -104,6 +105,7 @@ public class marketplace extends Fragment  {
     class listAdapter extends BaseAdapter {
         //데이터가 들어가있지 않고, 어떻게 담을지만 정의해뒀다.
         ArrayList<listitem> items = new ArrayList<listitem>();
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "Lato-Black.ttf");
 
         @Override
         public int getCount() {
@@ -131,6 +133,7 @@ public class marketplace extends Fragment  {
             // 코드를 재사용할 수 있도록
             if(convertView == null) {
                 singerItemView = new listitemview(getActivity().getApplicationContext());
+
             } else {
                 singerItemView = (listitemview) convertView;
             }
@@ -139,14 +142,10 @@ public class marketplace extends Fragment  {
             singerItemView.setMobile(item.getMobile());
             singerItemView.setImage(item.getResId());
 
-            TextView text = (TextView) convertView.findViewById(R.id.textView11);
+            //TextView text = (TextView) getActivity().findViewById(R.id.textView11);
+            //final Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.lato_black);
+            //text.setTypeface(typeface);
 
-            if(items.get(position) != null )
-            {
-                text.setTypeface();
-                text.setBackgroundColor( color );
-
-            }
 
             return singerItemView;
         }
