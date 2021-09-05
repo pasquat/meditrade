@@ -114,7 +114,7 @@ public class addSpecifics extends AppCompatActivity {
                     String descString = editTextDesc.getText().toString();
                     String email = user.getEmail();
                     firebase_add(titleString, filePath, email, descString, spinnerString, country);
-                    Intent intent = new Intent(addSpecifics.this, donorInfo.class) ;
+                    Intent intent = new Intent(addSpecifics.this, thankyou.class) ;
                     startActivity(intent) ;
                 }
                 catch(Exception e){

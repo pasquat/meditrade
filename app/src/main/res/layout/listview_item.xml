@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
-        android:layout_height="244dp"
+        android:layout_height="648px"
         android:background="@drawable/roundedcornersbig"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/masks" />

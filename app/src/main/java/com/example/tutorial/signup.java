@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -71,7 +72,15 @@ public class signup extends AppCompatActivity {
                 final String pwc = edt_pwc.getText().toString().trim();
 
                 if(id.equals("")||pw.equals("")){
-                    Toast.makeText(signup.this, "Please put in your Email and Password.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(signup.this, "Please put in your Email and Password.", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Please put in your Email and Password.", Snackbar.LENGTH_SHORT)
+                            .setAction("CLOSE", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                }
+                            })
+                            .setActionTextColor(getResources().getColor(android.R.color.holo_red_light ))
+                            .show();
                 }
                 else if(pw.equals(pwc)){
                     mAuth.createUserWithEmailAndPassword(id,pw)
@@ -80,12 +89,8 @@ public class signup extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        text.setText("Sign Up Successful!");
-                                        Toast toast = new Toast(getApplicationContext());
-                                        toast.setGravity(Gravity.BOTTOM, 0, 50);
-                                        toast.setDuration(Toast.LENGTH_SHORT);
-                                        toast.setView(layout);
-                                        toast.show();
+                                        Snackbar.make(findViewById(android.R.id.content), "Sign Up Successful!", Snackbar.LENGTH_SHORT)
+                                                .show();
 
                                         String phoneString = editTextPhone.getText().toString();
                                         String countryString = ccp.getSelectedCountryName();
@@ -96,23 +101,15 @@ public class signup extends AppCompatActivity {
                                         startActivity(intent) ;
                                     } else {
                                         // If sign in fails, display a message to the user.
-                                        text.setText("Please Check your credentials.");
-                                        Toast toast = new Toast(getApplicationContext());
-                                        toast.setGravity(Gravity.BOTTOM, 0, 50);
-                                        toast.setDuration(Toast.LENGTH_SHORT);
-                                        toast.setView(layout);
-                                        toast.show();
+                                        Snackbar.make(findViewById(android.R.id.content), "Please Check your Credentials.", Snackbar.LENGTH_SHORT)
+                                                .show();
                                     }
                                 }
                             });
                 }
                 else if(!pw.equals(pwc)){
-                    text.setText("Passwords do not match.");
-                    Toast toast = new Toast(getApplicationContext());
-                    toast.setGravity(Gravity.BOTTOM, 0, 50);
-                    toast.setDuration(Toast.LENGTH_SHORT);
-                    toast.setView(layout);
-                    toast.show();
+                    Snackbar.make(findViewById(android.R.id.content), "Passwords do not match", Snackbar.LENGTH_SHORT)
+                            .show();
                     edt_pw.setText("");
                     edt_pwc.setText("");
                 }

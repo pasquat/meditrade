@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,11 +60,13 @@ public class MainActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 String uid = mAuth.getCurrentUser().getUid();
                                 text.setText("Login Successful!");
-                                Toast toast = new Toast(getApplicationContext());
-                                toast.setGravity(Gravity.BOTTOM, 0, 0);
-                                toast.setDuration(Toast.LENGTH_SHORT);
-                                toast.setView(layout);
-                                toast.show();
+                                //Toast toast = new Toast(getApplicationContext());
+                                //toast.setGravity(Gravity.BOTTOM, 0, 0);
+                                //toast.setDuration(Toast.LENGTH_SHORT);
+                                //toast.setView(layout);
+                                //toast.show();
+                                Snackbar.make(findViewById(android.R.id.content), "Login Successful!", Snackbar.LENGTH_LONG)
+                                        .show();
 
                                 // Activity가 종료되기 전에 저장한다.
                                 //SharedPreferences를 sFile이름, 기본모드로 설정

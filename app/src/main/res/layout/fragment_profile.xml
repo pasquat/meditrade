@@ -54,11 +54,24 @@
         android:layout_below="@id/textView3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:background="@drawable/gradient_etc"
+        android:background="@drawable/whiterounded"
+        android:elevation="5dp"
         android:fontFamily="@font/lato_black"
         android:stateListAnimator="@null"
         android:text="Edit Socials"
-        android:textColor="#FFFFFF" />
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button8"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/whiterounded"
+        android:elevation="5dp"
+        android:stateListAnimator="@null"
+        android:text="Log Out" />
 
 
 </RelativeLayout>

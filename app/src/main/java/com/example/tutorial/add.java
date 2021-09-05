@@ -113,6 +113,7 @@ public class add extends Fragment {
             try {
                 //Uri 파일을 Bitmap으로 만들어서 ImageView에 집어 넣는다.
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                Bitmap.createScaledBitmap(bitmap,810,486,false);
                 uploadFile();
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {

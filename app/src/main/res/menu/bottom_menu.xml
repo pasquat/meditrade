@@ -5,18 +5,20 @@
         android:id="@+id/marketplace3"
         android:icon="@drawable/ic_store"
         android:title="Marketplace" />
-    <item
+    <!--<item
         android:id="@+id/categories"
         android:icon="@drawable/ic_list"
         android:title="Categories" />
+        !-->
     <item
         android:id="@+id/add2"
         android:icon="@drawable/ic_add"
         android:title="Add" />
-    <item
+    <!--<item
         android:id="@+id/notifications"
         android:icon="@drawable/ic_notifications"
         android:title="Notifications" />
+        !-->
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_person"

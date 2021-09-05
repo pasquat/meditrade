@@ -1,5 +1,7 @@
 package com.example.tutorial;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +64,23 @@ public class profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View inflate = inflater.inflate(R.layout.fragment_profile, container, false);
+        Button logout= (Button) inflate.findViewById(R.id.button8);
+        logout.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("sFile",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("uid",""); // key, value를 이용하여 저장하는 형태
+                editor.putString("id","");
+                editor.putString("pw","");
+                editor.commit();
+                getActivity().moveTaskToBack(true);						// 태스크를 백그라운드로 이동
+                getActivity().finishAndRemoveTask();						// 액티비티 종료 + 태스크 리스트에서 지우기
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
+        });
+
+        return inflate;
     }
 }
