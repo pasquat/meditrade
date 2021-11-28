@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/whiterounded">
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="10dp"
+    android:background="@drawable/whiterounded"
+    android:elevation="5dp">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="648px"
+        android:layout_marginTop="15dp"
         android:background="@drawable/roundedcornersbig"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/masks" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </RelativeLayout>
+        android:src="@drawable/masks" />
 
     <LinearLayout
         android:id="@+id/textandlocation"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/imageView5"
-        android:layout_marginTop="15dp"
+        android:layout_marginVertical="15dp"
         android:orientation="vertical">
 
         <TextView
@@ -48,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="7dp"
                 android:src="@drawable/location_on_24px_outlined" />
 
             <TextView
@@ -70,8 +68,8 @@
         android:layout_width="100dp"
         android:layout_height="70dp"
         android:layout_below="@id/imageView5"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="17.5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12.5dp"
         android:layout_toRightOf="@id/textandlocation"
         android:background="@drawable/gradient_getbutton"
         android:fontFamily="@font/lato_black"

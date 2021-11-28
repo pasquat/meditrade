@@ -6,12 +6,14 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
+    android:animateLayoutChanges="true"
     tools:context=".marketplace">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:animateLayoutChanges="true"
         android:background="#FFFFFF"
         android:elevation="10dp">
 
@@ -28,15 +30,54 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="30dp"
+            android:background="#FFFFFF"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:src="@drawable/search_24px_outlined"
+            app:layout_constraintBottom_toBottomOf="@+id/textView10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:paddingRight="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryBackground="@null" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:paddingTop="50dp"
+        android:text="Nothing to see here!" />
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:listSelector="@android:color/transparent"
         android:divider="@null"
         android:dividerHeight="0dp"
-        />
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+
+        >
+
+    </ListView>
 
 </LinearLayout>

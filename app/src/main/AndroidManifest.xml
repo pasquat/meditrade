@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tutorial">
-        <activity android:name=".thankyou"></activity>
+        <activity android:name=".deletespecifics"></activity>
+        <activity android:name=".thankyou" />
         <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +30,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".signup" />
         <activity android:name=".NewActivity" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

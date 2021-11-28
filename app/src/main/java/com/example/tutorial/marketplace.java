@@ -1,27 +1,42 @@
 package com.example.tutorial;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.transition.Fade;
+import androidx.transition.Transition;
+import androidx.transition.TransitionManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adrianotelesc.expandablesearchbar.ExpandableSearchBar;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +51,10 @@ public class marketplace extends Fragment  {
     listAdapter adapter;
     ListView listView;
     FirebaseDatabase database;
+    String tmpStr="";
+    String searchTxt="";
+    TextView nothing;
+    TextView title,location;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,6 +64,7 @@ public class marketplace extends Fragment  {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
 
 
@@ -73,24 +93,71 @@ public class marketplace extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(getContext());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         database = FirebaseDatabase.getInstance();
         adapter = new listAdapter();
-        database_run();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_marketplace, container, false);
-
+        Fresco.initialize(getContext());
         database = FirebaseDatabase.getInstance();
         listView = view.findViewById(R.id.listview);
+        SearchView searchbar = view.findViewById(R.id.searchbar);
+        ImageButton searchbtn = view.findViewById(R.id.imageButton2);
+        TextView meditrade = view.findViewById(R.id.textView10);
+        nothing = view.findViewById(R.id.textView18);
+        nothing.setVisibility(View.GONE);
+        searchbar.setVisibility(View.GONE);
+
+        searchbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchbar.setIconified(false);
+                searchbtn.setVisibility(View.GONE);
+                meditrade.setVisibility(View.GONE);
+                searchbar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        searchbar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Log.e("onQueryTextChange", "called");
+                searchTxt = searchbar.getQuery().toString();
+                database_run(tmpStr);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchTxt = searchbar.getQuery().toString();
+                database_run(tmpStr);
+                return false;
+            }
+
+        });
+
+        searchbar.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                searchbtn.setVisibility(View.VISIBLE);
+                meditrade.setVisibility(View.VISIBLE);
+                searchbar.setVisibility(View.GONE);
+                return false;
+            }
+        });
         listView.setAdapter(adapter);
+        getLocation();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
@@ -130,21 +197,18 @@ public class marketplace extends Fragment  {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             listitemview singerItemView = null;
+            listitem item = items.get(position);
+
             // 코드를 재사용할 수 있도록
             if(convertView == null) {
                 singerItemView = new listitemview(getActivity().getApplicationContext());
-
             } else {
                 singerItemView = (listitemview) convertView;
             }
-            listitem item = items.get(position);
+            singerItemView.setEmpty();
             singerItemView.setName(item.getName());
             singerItemView.setMobile(item.getMobile());
             singerItemView.setImage(item.getResId());
-
-            //TextView text = (TextView) getActivity().findViewById(R.id.textView11);
-            //final Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.lato_black);
-            //text.setTypeface(typeface);
 
 
             return singerItemView;
@@ -153,29 +217,67 @@ public class marketplace extends Fragment  {
             items.clear();
         }
     }
-    public void database_run()
+    public void database_run(String tmpStr)
     {
         adapter.clear();
         database.getReference("post").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot messageData : dataSnapshot.getChildren()) {
-                    String key = messageData.getKey();
-                    String desc = messageData.child("title").getValue().toString();
-                    //Toast.makeText(getContext(), messageData.toString(), Toast.LENGTH_SHORT).show();
                     String postId = messageData.child("country").getValue().toString();
-                    String imgId = messageData.child("img").getValue().toString();
-                    adapter.addItem(new listitem(desc,postId,imgId,key));
+                    String desc = messageData.child("title").getValue().toString();
+                    Log.d("database_run",messageData.toString());
+                    Log.d("database_run_2",postId+"/"+tmpStr);
+                    if(postId.equals(tmpStr)){
+                        if(searchTxt.equals("")) {
+                            String key = messageData.getKey();
+                            String imgId = messageData.child("img").getValue().toString();
+                            adapter.addItem(new listitem(desc, postId, imgId, key));
+                        }
+                        else{
+                            if(desc.contains(searchTxt)){
+                                String key = messageData.getKey();
+                                String imgId = messageData.child("img").getValue().toString();
+                                adapter.addItem(new listitem(desc, postId, imgId, key));
+                            }
+                        }
+                    }
+                }
+                if(adapter.isEmpty()){
+                    nothing.setVisibility(View.VISIBLE);
+                }
+                else {
+                    nothing.setVisibility(View.GONE);
                 }
                 adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    public void getLocation(){
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        database.getReference("info").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot messageData : dataSnapshot.getChildren()) {
+                    Log.d("conform",messageData.toString()+"/"+id);
+                    if(messageData.child("uid").getValue().toString().equals(id)){
+                        tmpStr=messageData.child("country").getValue().toString();
+                        database_run(tmpStr);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("error2",databaseError.toString());
                 //Toast.makeText(getContext(), databaseError.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
-
-
 
 }

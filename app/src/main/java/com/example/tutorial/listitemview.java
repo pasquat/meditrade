@@ -1,6 +1,7 @@
 package com.example.tutorial;
 
         import android.content.Context;
+        import android.graphics.Typeface;
         import android.net.Uri;
         import android.util.AttributeSet;
         import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ package com.example.tutorial;
         import androidx.annotation.Nullable;
 
         import com.bumptech.glide.Glide;
+        import com.facebook.drawee.view.SimpleDraweeView;
         import com.google.android.gms.tasks.OnFailureListener;
         import com.google.android.gms.tasks.OnSuccessListener;
         import com.google.firebase.storage.FirebaseStorage;
@@ -24,6 +26,7 @@ public class listitemview extends LinearLayout {
     //어디서든 사용할 수 있게하려면
     TextView textView, textView2;
     ImageView imageView;
+    SimpleDraweeView draweeView;
 
     public listitemview(Context context) {
         super(context);
@@ -40,10 +43,15 @@ public class listitemview extends LinearLayout {
     private void init(Context context){
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.listview_item,this, true);
-
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "Lato-Black.ttf");
+        Typeface smallfont = Typeface.createFromAsset(getContext().getAssets(), "Lato-Bold.ttf");
         textView = findViewById(R.id.textView11);
         textView2 = findViewById(R.id.textView12);
         imageView = findViewById(R.id.imageView5);
+        draweeView = (SimpleDraweeView) findViewById(R.id.imageView5);
+
+        textView.setTypeface(font);
+        textView2.setTypeface(smallfont);
     }
 
     public void setName(String name){
@@ -52,14 +60,16 @@ public class listitemview extends LinearLayout {
     public void setMobile(String mobile){
         textView2.setText(mobile);
     }
-    public void setImage(String resId){
+    public void setEmpty() {draweeView.setImageResource(0);}
+    public void setImage(String resId) {
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://meditrade-e4574.appspot.com");
         StorageReference storageRef = storage.getReference();
-        storageRef.child("images/"+resId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.child("images/" + resId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 //이미지 로드 성공시
-                Glide.with(getContext()).load(uri).centerCrop().into(imageView);
+                draweeView.setImageURI(uri);
+                //Glide.with(getContext()).load(uri).centerCrop().into(imageView);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -67,5 +77,6 @@ public class listitemview extends LinearLayout {
                 //이미지 로드 실패시
             }
         });
+
     }
 }

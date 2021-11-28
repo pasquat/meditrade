@@ -10,6 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -19,7 +25,7 @@ import static android.content.Context.MODE_PRIVATE;
  * create an instance of this fragment.
  */
 public class profile extends Fragment {
-
+    FirebaseDatabase database;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,6 +86,10 @@ public class profile extends Fragment {
                 android.os.Process.killProcess(android.os.Process.myPid());
             }
         });
+        database = FirebaseDatabase.getInstance();
+        TextView username = (TextView) inflate.findViewById(R.id.textView3);
+
+        username.setText("Welcome,\n"+FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         return inflate;
     }

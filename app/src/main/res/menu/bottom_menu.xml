@@ -23,4 +23,10 @@
         android:id="@+id/profile"
         android:icon="@drawable/ic_person"
         android:title="Profile" />
+    <item
+        android:id="@+id/myposts"
+        android:icon="@drawable/account_box_24px_outlined"
+        android:title="My Posts" />
+
+
 </menu>

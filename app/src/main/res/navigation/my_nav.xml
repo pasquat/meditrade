@@ -30,4 +30,11 @@
         android:name="com.example.tutorial.profile"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/myposts"
+        android:name="com.example.tutorial.myposts"
+        android:label="fragment_myposts"
+        tools:layout="@layout/fragment_myposts" />
+
+
 </navigation>
