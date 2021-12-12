@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -157,6 +158,47 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, signup.class) ;
 
                 startActivity(intent) ;
+            }
+        });
+        EditText usernameEditText = (EditText) findViewById(R.id.emailInputmain);
+        Button forgotPassword = (Button) findViewById(R.id.forgotpw);
+        forgotPassword.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(usernameEditText.getText().toString().equals("")){
+                    text.setText("Please type your email into the field above");
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setGravity(Gravity.BOTTOM, 0, 0);
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.setView(layout);
+                    toast.show();
+                }
+                else{
+                    String emailInputted = usernameEditText.getText().toString();
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(emailInputted)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("TAG","Email sent.");
+                                        text.setText("Email has been sent!");
+                                        Toast toast = new Toast(getApplicationContext());
+                                        toast.setGravity(Gravity.BOTTOM, 0, 0);
+                                        toast.setDuration(Toast.LENGTH_SHORT);
+                                        toast.setView(layout);
+                                        toast.show();
+                                    }
+                                    else{
+                                        text.setText("Failed. Check your credentials or internet connection.");
+                                        Toast toast = new Toast(getApplicationContext());
+                                        toast.setGravity(Gravity.BOTTOM, 0, 0);
+                                        toast.setDuration(Toast.LENGTH_SHORT);
+                                        toast.setView(layout);
+                                        toast.show();
+                                    }
+                                }
+                            });
+                }
             }
         });
 

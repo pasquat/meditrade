@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" >
+        <shape>
+            <gradient
+                android:startColor="#1FB5B0"
+                android:endColor="#6CB61A"
+                android:angle="90" />
+            <corners
+                android:radius="50dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <gradient
+                android:startColor="#2BF6F0"
+                android:endColor="#8FF122"
+                android:angle="90" />
+
+            <corners
+                android:radius="50dp" />
+        </shape>
+    </item>
     <!--  Gradient Bg for listrow -->
-    <gradient
-        android:startColor="#2BF6F0"
-        android:endColor="#8FF122"
-        android:angle="90" />
-    <corners android:radius="50dp"/>
-</shape>
+</selector>
