@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -95,5 +96,16 @@ public class donorInfo extends AppCompatActivity {
 
             }
         });
+
+        ImageButton next = (ImageButton) findViewById(R.id.button6);
+        next.setOnClickListener(new Button.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(donorInfo.this, add.class) ;
+            //after going to marketplace other location's stuff comes up
+            startActivity(intent) ;
+        }
+    });
 }
 }

@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -48,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
                 (ViewGroup) findViewById(R.id.toast_layout_root));
         TextView text = (TextView) layout.findViewById(R.id.text);
 
+        if (isConnected()) {
+
+        }
+        else {
+            Snackbar.make(findViewById(android.R.id.content),"No connection",Snackbar.LENGTH_LONG).show();
+        }
+
         if(spText.equals("")){}
         else{
             String id = sf.getString("id","");
@@ -88,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                                 text.setText("Username or Password is incorrect.");
                                 Toast toast = new Toast(getApplicationContext());
                                 toast.setGravity(Gravity.BOTTOM, 0, 0);
+                                toast.setMargin(0,0.05f);
                                 toast.setDuration(Toast.LENGTH_SHORT);
                                 toast.setView(layout);
                                 toast.show();
@@ -105,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 if(id.equals("")||pw.equals("")){
                     text.setText("Username or Password is incorrect.");
                     Toast toast = new Toast(getApplicationContext());
-                    toast.setGravity(Gravity.BOTTOM, 0, 50);
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.setMargin(0,0.05f);
                     toast.setDuration(Toast.LENGTH_SHORT);
                     toast.setView(layout);
                     toast.show();
@@ -119,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                                     text.setText("Login Successful!");
                                     Toast toast = new Toast(getApplicationContext());
                                     toast.setGravity(Gravity.BOTTOM, 0, 0);
+                                    toast.setMargin(0,0.05f);
                                     toast.setDuration(Toast.LENGTH_SHORT);
                                     toast.setView(layout);
                                     toast.show();
@@ -142,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                                     text.setText("Username or Password is incorrect.");
                                     Toast toast = new Toast(getApplicationContext());
                                     toast.setGravity(Gravity.BOTTOM, 0, 0);
+                                    toast.setMargin(0,0.05f);
                                     toast.setDuration(Toast.LENGTH_SHORT);
                                     toast.setView(layout);
                                     toast.show();
@@ -185,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
                                         Toast toast = new Toast(getApplicationContext());
                                         toast.setGravity(Gravity.BOTTOM, 0, 0);
                                         toast.setDuration(Toast.LENGTH_SHORT);
+                                        toast.setMargin(0,0.05f);
                                         toast.setView(layout);
                                         toast.show();
                                     }
@@ -192,7 +207,8 @@ public class MainActivity extends AppCompatActivity {
                                         text.setText("Failed. Check your credentials or internet connection.");
                                         Toast toast = new Toast(getApplicationContext());
                                         toast.setGravity(Gravity.BOTTOM, 0, 0);
-                                        toast.setDuration(Toast.LENGTH_SHORT);
+                                        toast.setDuration(Toast.LENGTH_LONG);
+                                        toast.setMargin(0,0.05f);
                                         toast.setView(layout);
                                         toast.show();
                                     }
@@ -202,5 +218,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+
+    private Boolean isConnected(){
+        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 }

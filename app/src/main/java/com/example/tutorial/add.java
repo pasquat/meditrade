@@ -16,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -90,6 +92,15 @@ public class add extends Fragment {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_add, container, false);
         imageView = (ImageView) inflate.findViewById(R.id.imageView);
+
+        chkInternet chk=new chkInternet(getContext());
+        if(chk.isConnected()){
+
+        }
+        else{
+            Snackbar.make(getActivity().findViewById(android.R.id.content),"No connection", Snackbar.LENGTH_SHORT).show();
+        }
+
         Button button3 = (Button) inflate.findViewById(R.id.post);
         button3.setOnClickListener(new Button.OnClickListener() {
             @Override

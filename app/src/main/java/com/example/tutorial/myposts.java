@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -100,6 +101,14 @@ public class myposts extends Fragment {
         database_run();
         adapter = new listAdapter();
         listviewdelete.setAdapter(adapter);
+
+        chkInternet chk=new chkInternet(getContext());
+        if(chk.isConnected()){
+
+        }
+        else{
+            Snackbar.make(getActivity().findViewById(android.R.id.content),"No connection", Snackbar.LENGTH_SHORT).show();
+        }
 
         listviewdelete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

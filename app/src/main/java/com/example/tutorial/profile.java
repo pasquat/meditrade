@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
@@ -69,8 +70,19 @@ public class profile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        chkInternet chk=new chkInternet(getContext());
+        if(chk.isConnected()){
+
+        }
+        else{
+            Snackbar.make(getActivity().findViewById(android.R.id.content),"No connection", Snackbar.LENGTH_SHORT).show();
+        }
+
         Button logout= (Button) inflate.findViewById(R.id.button8);
         logout.setOnClickListener(new Button.OnClickListener() {
             @Override

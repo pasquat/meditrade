@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,7 @@ import android.widget.Toast;
 
 import com.adrianotelesc.expandablesearchbar.ExpandableSearchBar;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -117,6 +120,14 @@ public class marketplace extends Fragment  {
         nothing = view.findViewById(R.id.textView18);
         nothing.setVisibility(View.GONE);
         searchbar.setVisibility(View.GONE);
+
+
+        if (isConnected()) {
+
+        }
+        else {
+            Snackbar.make(getActivity().findViewById(android.R.id.content),"No connection",Snackbar.LENGTH_SHORT).show();
+        }
 
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,5 +290,10 @@ public class marketplace extends Fragment  {
         });
 
     }
-
+    private Boolean isConnected(){
+        ConnectivityManager cm = (ConnectivityManager)getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        return isConnected;
+    }
 }

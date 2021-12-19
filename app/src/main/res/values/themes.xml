@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
-        <item name="android:fontFamily">@font/lato_black</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
         <item name="android:colorEdgeEffect">@color/white</item>
     </style>
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">

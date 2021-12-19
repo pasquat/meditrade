@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".add">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,6 +55,18 @@
         android:elevation="5dp"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/lato_bold"
+        android:gravity="center"
+        android:text="Post your donations here!"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>
